@@ -7,6 +7,9 @@ Colores:
     gris: #e8e8e7
     
 */
+h2 {
+    text-align: center;
+}
 
 form {
     position: absolute;

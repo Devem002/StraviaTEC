@@ -1,6 +1,9 @@
-import { Component} from '@angular/core';
+import { Component,Inject} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'; 
+
+
 
 @Component({
   selector: 'app-registrar-usuario',
@@ -13,17 +16,16 @@ export class RegistrarUsuarioComponent {
   nacionalidades?: string[];
 
   // Constructor del componente
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog) {
     this.formularioRegistro = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido1: ['', Validators.required],
       apellido2: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
-      edad: ['', [Validators.required, Validators.min(18)]],
       nacionalidad: ['', Validators.required],
       foto: ['', Validators.required],
       usuario: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required]]
     });
     
     // Josue esto es lo que hay que cambiar para meter nacionalidades
@@ -33,8 +35,20 @@ export class RegistrarUsuarioComponent {
 
   // Función que se ejecuta al enviar el formulario
   registrarUsuario(): void {
+    let message: string;
+    if (this.formularioRegistro.valid) {
+      console.log('Formulario: ', this.formularioRegistro.value);
+      message = '¡Registro exitoso!';
+      this.router.navigate(['']);
+    } else {
+      message = '¡Ha habido un problema al registrar!';
+    }
     console.log('Formulario: ', this.formularioRegistro.value);
-    this.router.navigate(['']);
+    const dialogRef = this.dialog.open(DialogContentRegistrar, {
+      data: { message: message },
+      width: 'fit-content',
+      panelClass: 'centered-dialog'
+    });
   }
 
   // Función que se ejecuta al seleccionar una foto
@@ -50,4 +64,28 @@ export class RegistrarUsuarioComponent {
       this.fotoPreview = undefined;
     }
   }
+}
+// Alerta de inicio de sesión exitoso
+@Component({
+  selector: 'dialog-content-registrar',
+  template: `
+    <h2 mat-dialog-title>Registro</h2>
+    <mat-dialog-content>{{ data.message }}</mat-dialog-content>
+`,
+})
+export class DialogContentRegistrar {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialogRef: MatDialogRef<DialogContentRegistrar> 
+  ) {
+
+    // Cierre automático de la alerta
+    setTimeout(() => {
+      this.dialogRef.close();
+    }, 2000);
+  }
+}
+
+interface DialogData {
+  message: string;
 }
