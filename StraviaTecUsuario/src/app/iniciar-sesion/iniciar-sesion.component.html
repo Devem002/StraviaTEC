@@ -1,0 +1,14 @@
+<form [formGroup]="formularioInicioSesion" (ngSubmit)="iniciarSesion()">
+    <img src="../assets/StraviaTecLogo.png" alt="Logo">
+
+    <label for="usuario">Usuario:</label>
+    <input id="usuario" type="text" formControlName="usuario">
+    
+    <label for="contraseña">Contraseña:</label>
+    <input id="contraseña" type="password" formControlName="contraseña">
+    
+    <button type="submit">Iniciar sesión</button>
+
+    <a (click)="registrarUsuario()">¿No tienes cuenta?</a>
+
+</form>
