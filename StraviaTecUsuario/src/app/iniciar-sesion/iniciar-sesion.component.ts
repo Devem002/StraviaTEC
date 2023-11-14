@@ -2,7 +2,7 @@ import { Component,Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'; 
-
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -11,13 +11,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 })
 export class IniciarSesionComponent {
   formularioInicioSesion: FormGroup;
+  hola: string = '';
 
   // Constructor de la clase IniciarSesionComponent
-  constructor(private formBuilder: FormBuilder, private router: Router, public dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private router: Router, public dialog: MatDialog, private sharedService: SharedService) {
     this.formularioInicioSesion = this.formBuilder.group({
       usuario: ['', Validators.required],
       contraseña: ['', Validators.required]
     });
+    this.sharedService.usuarioActual.subscribe(usuario => this.hola = usuario);
   }
 
   // Función para iniciar sesión
@@ -26,9 +28,16 @@ export class IniciarSesionComponent {
     if (this.formularioInicioSesion.valid) {
       console.log(this.formularioInicioSesion.value);
       message = '¡Has iniciado sesión con éxito!'
+
+      let usuarioControl = this.formularioInicioSesion.get('usuario');
+      if (usuarioControl) {
+        this.sharedService.changeUsuario(usuarioControl.value);
+      }
+      console.log(this.hola);
     }
     else{
       message = '¡Ha habido un problema al iniciar sesión!';
+      this.formularioInicioSesion.reset();
     }
     this.dialog.open(DialogContentIniciar, {
       data: { message: message } ,

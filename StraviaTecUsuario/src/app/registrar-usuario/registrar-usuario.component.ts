@@ -42,6 +42,7 @@ export class RegistrarUsuarioComponent {
       this.router.navigate(['']);
     } else {
       message = '¡Ha habido un problema al registrar!';
+      this.formularioRegistro.reset();
     }
     console.log('Formulario: ', this.formularioRegistro.value);
     const dialogRef = this.dialog.open(DialogContentRegistrar, {
@@ -71,7 +72,8 @@ export class RegistrarUsuarioComponent {
   template: `
     <h2 mat-dialog-title>Registro</h2>
     <mat-dialog-content>{{ data.message }}</mat-dialog-content>
-`,
+  `,
+styleUrls: ['./registrar-usuario.component.css']
 })
 export class DialogContentRegistrar {
   constructor(
