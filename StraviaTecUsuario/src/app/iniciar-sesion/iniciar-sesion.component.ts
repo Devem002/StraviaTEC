@@ -11,7 +11,7 @@ import { SharedService } from '../shared.service';
 })
 export class IniciarSesionComponent {
   formularioInicioSesion: FormGroup;
-  hola: string = '';
+
 
   // Constructor de la clase IniciarSesionComponent
   constructor(private formBuilder: FormBuilder, private router: Router, public dialog: MatDialog, private sharedService: SharedService) {
@@ -19,7 +19,7 @@ export class IniciarSesionComponent {
       usuario: ['', Validators.required],
       contraseña: ['', Validators.required]
     });
-    this.sharedService.usuarioActual.subscribe(usuario => this.hola = usuario);
+
   }
 
   // Función para iniciar sesión
@@ -33,7 +33,7 @@ export class IniciarSesionComponent {
       if (usuarioControl) {
         this.sharedService.changeUsuario(usuarioControl.value);
       }
-      console.log(this.hola);
+      this.router.navigate(['/pagina-principal']);
     }
     else{
       message = '¡Ha habido un problema al iniciar sesión!';

@@ -4,7 +4,9 @@ body {
     background-color: #e8e8e7;
 }
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 .mat-dialog-container {
     display: flex;
     align-items: center;
