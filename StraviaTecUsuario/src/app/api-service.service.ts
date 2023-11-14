@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiServiceService {
+export class ApiService {
 
   //Urls for para conectarse a la API
   private urlTestUrl = 'https://pokeapi.co/api/v2/pokemon/ditto';

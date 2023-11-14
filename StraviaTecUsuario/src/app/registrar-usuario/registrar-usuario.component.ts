@@ -1,7 +1,8 @@
-import { Component,Inject} from '@angular/core';
+import { Component,Inject, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'; 
+import { ApiService } from '../api-service.service';
 
 
 
@@ -10,13 +11,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   templateUrl: './registrar-usuario.component.html',
   styleUrls: ['./registrar-usuario.component.css']
 })
-export class RegistrarUsuarioComponent {
+export class RegistrarUsuarioComponent implements OnInit {
   formularioRegistro: FormGroup;
   fotoPreview: string | ArrayBuffer | undefined;
   nacionalidades?: string[];
 
   // Constructor del componente
-  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog, private api:ApiService) {
     this.formularioRegistro = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido1: ['', Validators.required],
@@ -30,6 +31,9 @@ export class RegistrarUsuarioComponent {
     
     // Josue esto es lo que hay que cambiar para meter nacionalidades
     this.nacionalidades = ['España', 'Francia', 'Alemania', 'Italia', 'Portugal']; 
+  }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
 
