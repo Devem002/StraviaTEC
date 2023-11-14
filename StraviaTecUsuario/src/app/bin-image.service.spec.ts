@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ApiService } from './api-service.service';
+import { BinImageService } from './bin-image.service';
 
-describe('ApiServiceService', () => {
-  let service: ApiService;
+describe('BinImageService', () => {
+  let service: BinImageService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ApiService);
+    service = TestBed.inject(BinImageService);
   });
 
   it('should be created', () => {
