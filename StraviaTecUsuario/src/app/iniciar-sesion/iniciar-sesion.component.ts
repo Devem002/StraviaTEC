@@ -25,7 +25,7 @@ export class IniciarSesionComponent {
   // Función para iniciar sesión
   iniciarSesion() {
     let message: string;
-    if (this.formularioInicioSesion.valid) {
+    if (this.formularioInicioSesion.valid) {//Validar que existe el usuario y contrasena en la db
       console.log(this.formularioInicioSesion.value);
       message = '¡Has iniciado sesión con éxito!'
 

@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'; 
 import { ApiService } from '../api-service.service';
+import { ThisReceiver } from '@angular/compiler';
+import { BinImageService } from '../bin-image.service';
 
 
 
@@ -12,12 +14,15 @@ import { ApiService } from '../api-service.service';
   styleUrls: ['./registrar-usuario.component.css']
 })
 export class RegistrarUsuarioComponent implements OnInit {
+  //Aqui hay que crear una interfaz para enviarla
+  prueba:any;//Donde se mete la interfaz
+  pruebaPaises:any;
   formularioRegistro: FormGroup;
   fotoPreview: string | ArrayBuffer | undefined;
   nacionalidades?: string[];
 
   // Constructor del componente
-  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog, private api:ApiService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog, private apiService:ApiService, private bin_img:BinImageService) {
     this.formularioRegistro = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido1: ['', Validators.required],
@@ -31,11 +36,12 @@ export class RegistrarUsuarioComponent implements OnInit {
     
     // Josue esto es lo que hay que cambiar para meter nacionalidades
     this.nacionalidades = ['España', 'Francia', 'Alemania', 'Italia', 'Portugal']; 
+    //this.nacionalidades = this.apiService.getDataTest();
   }
+
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
-
 
   // Función que se ejecuta al enviar el formulario
   registrarUsuario(): void {
@@ -57,7 +63,7 @@ export class RegistrarUsuarioComponent implements OnInit {
   }
 
   // Función que se ejecuta al seleccionar una foto
-  mostrarPrevisualizacion(event: Event): void { 
+  mostrarPrevisualizacion(event: Event): void {//Preguntar por el archivo para el convertidor en bits y guardarlo
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -68,6 +74,13 @@ export class RegistrarUsuarioComponent implements OnInit {
     } else {
       this.fotoPreview = undefined;
     }
+  }
+
+  PostU(){//Llama el servicio para guardar el usuario
+    this.apiService.postDataTest(this.prueba).subscribe(data => {
+      console.log(this.prueba)
+      console.log('Funca U')
+    })
   }
 }
 // Alerta de inicio de sesión exitoso
