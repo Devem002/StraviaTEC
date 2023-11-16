@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using StraviaSqlApi.DbContexts;
 using StraviaSqlApi.Dtos;
 using StraviaSqlApi.Entities;
-using StraviaSqlApi.Utilities;
 
 namespace StraviaSqlApi.Controllers;
 
@@ -25,7 +24,7 @@ public class AtletaController : ControllerBase
         var model = _mapper.Map<Atleta>(payload);
         model.Contrasena = Utilities.Encriptador.Encrypt(model.Contrasena);
         Console.Out.WriteLine(model.Contrasena);
-        var AtletaExist = _straviaDb.Atleta.Any(e => e.Usuario == model.Usuario);
+        var AtletaExist = _straviaDb.ATLETA.Any(e => e.usuario == model.usuario);
         if (AtletaExist == true)
         {
             return Ok(new { Message = "Ya son amigos" });

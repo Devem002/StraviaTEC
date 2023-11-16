@@ -10,7 +10,7 @@ public class Patrocinador
 
     public String Nmbr_rep_legal { set; get; }
 
-    public String[] Logo { set; get; }
+    public String Logo { set; get; }
 
     public int Num_rep_legal { set; get; }
 }

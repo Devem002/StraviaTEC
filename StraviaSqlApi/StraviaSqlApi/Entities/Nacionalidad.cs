@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StraviaSqlApi.Entities;
 
 public class Nacionalidad
 {
-    [Key] 
-    public String Nacion { set; get; }
+    [Key] public string Nacion {  get; }
     
-    public List<Atleta> Atletas { get; }
+    public virtual ICollection<Atleta> Atleta { get; set; } = new List<Atleta>();
 }

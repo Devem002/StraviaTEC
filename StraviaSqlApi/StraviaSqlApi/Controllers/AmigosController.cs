@@ -25,7 +25,7 @@ public class AmigosController : ControllerBase
     public IActionResult CreateAmigos([FromBody] AmigosDto payload)
     {
         var model =_mapper.Map<Amigos>(payload);
-        var AmigoExist = _straviaDb.Amigos.Any(e => e.Usuario == model.Usuario);
+        var AmigoExist = _straviaDb.AMIGOS.Any(e => e.Usuario == model.Usuario);
         if (AmigoExist == true)
         {
             return Ok(new { Message = "Ya son amigos" });
@@ -41,7 +41,7 @@ public class AmigosController : ControllerBase
     [HttpGet("/amigo")]
     public IActionResult GetAllamigos()
     {
-        var amigos = _straviaDb.Amigos;
+        var amigos = _straviaDb.AMIGOS;
         return Ok(amigos);
     }
 
@@ -49,7 +49,7 @@ public class AmigosController : ControllerBase
     [HttpGet("/{id}/amigo")]
     public Amigos GetById(string id)
     {
-        var amigo = _straviaDb.Amigos.Find(id);
+        var amigo = _straviaDb.AMIGOS.Find(id);
         return amigo;
     }
 
@@ -58,7 +58,7 @@ public class AmigosController : ControllerBase
     public IActionResult Put(string id, [FromBody] AmigosDto payload)
     {
         var model = _mapper.Map<Amigos>(payload);
-        _straviaDb.Amigos.Attach(model);
+        _straviaDb.AMIGOS.Attach(model);
         _straviaDb.Entry(model).State = EntityState.Modified;
 
         _straviaDb.SaveChanges();
@@ -72,7 +72,7 @@ public class AmigosController : ControllerBase
     {
         var amigo = GetById(id);
 
-        _straviaDb.Amigos.Remove(amigo);
+        _straviaDb.AMIGOS.Remove(amigo);
         _straviaDb.SaveChanges();
 
         return Ok(new { MESSAGE = "amigo Deleted" });
