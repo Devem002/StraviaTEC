@@ -1,0 +1,269 @@
+CREATE TABLE ATLETA
+(
+	Usuario varchar(20) not null,
+	Contrasena varchar(15) not null,
+	Foto varbinary(max),
+	Nombre varchar(15) not null,
+	Apellido_1 varchar(15) not null,
+	Apellido_2 varchar(15) not null,
+	Fecha_nacimiento date not null,
+	Nacionalidad varchar(40) not null,
+	Clasificacion varchar(10)not null,
+	Primary key (Usuario)
+);
+
+CREATE TABLE AMIGOS
+(
+	Usuario varchar(20) not null,
+	Amigo varchar(20) not null,
+	Primary key (Usuario, Amigo)
+);
+
+CREATE TABLE NACIONALIDAD
+(
+	Nacion varchar(40) not null,
+	Primary key (Nacion)
+);
+
+CREATE TABLE CATEGORIA
+(
+	Clasificacion varchar(10) not null,
+	Primary key (Clasificacion)
+);
+
+CREATE TABLE GRUPOS
+(
+	Nombre varchar(30) not null,
+	Atleta_admin varchar(20) not null,
+	Primary key (Nombre)
+);
+
+CREATE TABLE INTEGRANTES
+(
+	Nmbr_grupo varchar(30) not null,
+	Integrante varchar(20) not null,
+	Primary key (Nmbr_grupo, Integrante)
+);
+
+CREATE TABLE INSCRITO
+(
+	Carrera varchar(50) not null,
+	Atleta varchar(20) not null,
+	Primary key (Carrera, Atleta)
+);
+
+CREATE TABLE PRIV_CARRERA
+(
+	Nmbr_Carrera varchar(50) unique not null,
+	Nmbr_Grupo varchar(30) not null,
+	Primary key (Nmbr_Carrera, Nmbr_Grupo)
+);
+
+CREATE TABLE PRIV_RETO
+(
+	Nmbr_reto varchar(30) unique not null,
+	Nmbr_Grupo varchar(30) not null,
+	Primary key (Nmbr_reto, Nmbr_Grupo)
+);
+
+CREATE TABLE ACTIVIDAD
+(
+	Nmbr_Actividad varchar(20) not null,
+	Fecha date not null,
+	Hora time not null,
+	Kms int not null,
+	Duracion time,
+	Recorrido_gpx nvarchar(500),
+	Atleta varchar(20) not null,
+	Clase_actividad varchar(30) not null,
+	Primary key (Nmbr_Actividad, Atleta)
+);
+
+CREATE TABLE CLASIFICACION_ACTIVIDAD
+(
+	Clasificacion varchar(30) not null,
+	Primary key (Clasificacion)
+);
+
+CREATE TABLE CARRERA
+(
+	Nombre varchar(50) not null,
+	Fecha date not null,
+	Hora time not null,
+	Precio money not null,
+	Kms int not null,
+	Recorrido_gpx nvarchar(500),
+	Finalizado bit default 0,
+	Clase_actividad varchar(30) not null,
+	Primary key (Nombre)
+);
+
+CREATE TABLE RETOS
+(
+	Nombre varchar(30) not null,
+	Kms int not null,
+	Completitud int default 0,
+	Finalizado bit default 0,
+	Fecha_inicio date not null,
+	Fecha_fin date not null,
+	Fondo_altura varchar(10) not null,
+	Clase_actividad varchar(30) not null,
+	Primary key (Nombre)
+);
+
+CREATE TABLE CUENTA_BANCO
+(
+	Numero_cuenta int not null,
+	Carrera_dueno varchar(50) not null,
+	Primary key (Numero_cuenta)
+);
+
+CREATE TABLE PATROCINA_CARRERA
+(
+	Nmbr_patrocinador varchar(20) not null,
+	Nmbr_carrera varchar(50) not null,
+	Primary key (Nmbr_patrocinador, Nmbr_carrera)
+);
+
+CREATE TABLE PATROCINA_RETO
+(
+	Nmbr_patrocinador varchar(20) not null,
+	Nmbr_reto varchar(30) not null,
+	Primary key (Nmbr_patrocinador, Nmbr_reto)
+);
+
+CREATE TABLE FONDO_ALTURA
+(
+	Tipo_f_a varchar(10) not null,
+	Primary key (Tipo_f_a)
+);
+
+CREATE TABLE PATROCINADOR
+(
+	Nmbr_comercial varchar(20) not null,
+	Nmbr_rep_legal varchar(30) not null,
+	Logo varbinary(max),
+	Num_rep_legal int not null,
+	Primary key (Nmbr_comercial)
+);
+
+CREATE TABLE ACT_CARRERA
+(
+	Nmbr_Carrera varchar(50) not null,
+	Nmbr_Actividad varchar(20) not null,
+	Atleta varchar(20) not null,
+	Primary key (Nmbr_Carrera, Nmbr_Actividad, Atleta)
+);
+
+CREATE TABLE ACT_RETO
+(
+	Nmbr_Reto varchar(30) not null,
+	Nmbr_Actividad varchar(20) not null,
+	Atleta varchar(20) not null,
+	Primary key (Nmbr_Reto, Nmbr_Actividad, Atleta)
+);
+
+ALTER TABLE AMIGOS 
+ADD CONSTRAINT AMIGO_USUARIO_FK FOREIGN KEY (Usuario) 
+REFERENCES ATLETA (Usuario);
+
+ALTER TABLE AMIGOS
+ADD CONSTRAINT AMIGO_AMIGO_FK FOREIGN KEY (Amigo)
+REFERENCES ATLETA (Usuario);
+
+ALTER TABLE ATLETA
+ADD CONSTRAINT ATLETA_NACIONALIDAD_FK FOREIGN KEY (Nacionalidad)
+REFERENCES NACIONALIDAD (Nacion);
+
+ALTER TABLE ATLETA
+ADD CONSTRAINT ATLETA_CLASIFICACION FOREIGN KEY (Clasificacion)
+REFERENCES CATEGORIA (Clasificacion);
+
+ALTER TABLE GRUPOS
+ADD CONSTRAINT GRUPO_ADMIN_FK FOREIGN KEY (Atleta_admin)
+REFERENCES ATLETA (Usuario);
+
+ALTER TABLE INTEGRANTES 
+ADD CONSTRAINT INTEGRANTE_GRUPO_FK FOREIGN KEY (Nmbr_grupo)
+REFERENCES GRUPOS (Nombre);
+
+ALTER TABLE INTEGRANTES
+ADD CONSTRAINT INTEGRANTES_ATLETA_FK FOREIGN KEY (Integrante)
+REFERENCES ATLETA (Usuario);
+
+ALTER TABLE INSCRITO
+ADD CONSTRAINT INSCRITO_CARRERA_FK FOREIGN KEY (Carrera)
+REFERENCES CARRERA (Nombre);
+
+ALTER TABLE INSCRITO
+ADD CONSTRAINT INSCRITO_ATLETA_FK FOREIGN KEY (Atleta)
+REFERENCES ATLETA (Usuario);
+
+ALTER TABLE PRIV_CARRERA
+ADD CONSTRAINT PRIV_CARRERA_FK FOREIGN KEY (Nmbr_Carrera)
+REFERENCES CARRERA (Nombre);
+
+ALTER TABLE PRIV_CARRERA
+ADD CONSTRAINT PRIV_CARRERA_GRUPO_FK FOREIGN KEY (Nmbr_Grupo)
+REFERENCES GRUPOS (Nombre);
+
+ALTER TABLE PRIV_RETO
+ADD CONSTRAINT PRIV_RETO_FK FOREIGN KEY (Nmbr_Reto)
+REFERENCES RETOS (Nombre);
+
+ALTER TABLE PRIV_RETO
+ADD CONSTRAINT PRIV_RETO_GRUPO_FK FOREIGN KEY (Nmbr_Grupo)
+REFERENCES GRUPOS (Nombre);
+
+ALTER TABLE ACTIVIDAD
+ADD CONSTRAINT ACTIVIDAD_ATLETA_FK FOREIGN KEY (Atleta)
+REFERENCES ATLETA (Usuario);
+
+ALTER TABLE ACTIVIDAD
+ADD CONSTRAINT ACTIVIDAD_CLASIFICACION_FK FOREIGN KEY (Clase_actividad)
+REFERENCES CLASIFICACION_ACTIVIDAD (Clasificacion);
+
+ALTER TABLE CARRERA
+ADD CONSTRAINT CARRERA_CLASIFICACION_FK FOREIGN KEY (Clase_actividad)
+REFERENCES CLASIFICACION_ACTIVIDAD (Clasificacion);
+
+ALTER TABLE RETOS
+ADD CONSTRAINT RETO_FONDO_ALTURA_FK FOREIGN KEY (Fondo_altura)
+REFERENCES FONDO_ALTURA (Tipo_f_a);
+
+ALTER TABLE CUENTA_BANCO
+ADD CONSTRAINT CUENTA_BANCO_CARRERA_FK FOREIGN KEY (Carrera_dueno)
+REFERENCES CARRERA (Nombre);
+
+ALTER TABLE PATROCINA_CARRERA
+ADD CONSTRAINT PATROCINA_CARRERA_PATROCINADOR_FK FOREIGN KEY (Nmbr_patrocinador)
+REFERENCES PATROCINADOR (Nmbr_comercial);
+
+ALTER TABLE PATROCINA_CARRERA
+ADD CONSTRAINT PATROCINA_CARRERA_CARRERA_FK FOREIGN KEY (Nmbr_carrera)
+REFERENCES CARRERA (Nombre);
+
+ALTER TABLE PATROCINA_RETO
+ADD CONSTRAINT PATROCINA_RETO_PATROCINADOR_FK FOREIGN KEY (Nmbr_patrocinador)
+REFERENCES PATROCINADOR (Nmbr_comercial);
+
+ALTER TABLE PATROCINA_RETO
+ADD CONSTRAINT PATROCINA_RETO_RETO_FK FOREIGN KEY (Nmbr_reto)
+REFERENCES RETOS (Nombre);
+
+ALTER TABLE ACT_CARRERA
+ADD CONSTRAINT ACT_CARRERA_CARRERA_FK FOREIGN KEY (Nmbr_Carrera)
+REFERENCES CARRERA (Nombre);
+
+ALTER TABLE ACT_CARRERA
+ADD CONSTRAINT ACT_CARRERA_ACT_FK FOREIGN KEY (Nmbr_Actividad, Atleta)
+REFERENCES ACTIVIDAD (Nmbr_Actividad, Atleta);
+
+
+ALTER TABLE ACT_RETO
+ADD CONSTRAINT ACT_RETO_FK FOREIGN KEY (Nmbr_Reto)
+REFERENCES RETOS (Nombre);
+
+ALTER TABLE ACT_RETO
+ADD CONSTRAINT ACT_RETO_ACT_FK FOREIGN KEY (Nmbr_Actividad, Atleta)
+REFERENCES ACTIVIDAD (Nmbr_Actividad, Atleta);
