@@ -71,7 +71,7 @@ CREATE TABLE ACTIVIDAD
 	Nmbr_Actividad varchar(20) not null,
 	Fecha date not null,
 	Hora time not null,
-	Kms int not null,
+	Kms_hechos int not null,
 	Duracion time,
 	Recorrido_gpx nvarchar(500),
 	Atleta varchar(20) not null,
@@ -91,7 +91,7 @@ CREATE TABLE CARRERA
 	Fecha date not null,
 	Hora time not null,
 	Precio money not null,
-	Kms int not null,
+	Kms_total int not null,
 	Recorrido_gpx nvarchar(500),
 	Finalizado bit default 0,
 	Clase_actividad varchar(30) not null,
@@ -101,8 +101,7 @@ CREATE TABLE CARRERA
 CREATE TABLE RETOS
 (
 	Nombre varchar(30) not null,
-	Kms int not null,
-	Completitud int default 0,
+	Kms_total int not null,
 	Finalizado bit default 0,
 	Fecha_inicio date not null,
 	Fecha_fin date not null,
@@ -225,6 +224,10 @@ REFERENCES CLASIFICACION_ACTIVIDAD (Clasificacion);
 
 ALTER TABLE CARRERA
 ADD CONSTRAINT CARRERA_CLASIFICACION_FK FOREIGN KEY (Clase_actividad)
+REFERENCES CLASIFICACION_ACTIVIDAD (Clasificacion);
+
+ALTER TABLE RETOS
+ADD CONSTRAINT RETOS_CLASIFICACION_FK FOREIGN KEY (Clase_actividad)
 REFERENCES CLASIFICACION_ACTIVIDAD (Clasificacion);
 
 ALTER TABLE RETOS
