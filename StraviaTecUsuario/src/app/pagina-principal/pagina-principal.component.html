@@ -5,7 +5,8 @@
     </aside>
     
     <main>
-        <!-- Main content goes here -->
+        <input type="file" (change)="onFileChange($event)" accept=".gpx" />
+        <div id="map" style="height: 400px;"></div>
     </main>
 </div>
 
