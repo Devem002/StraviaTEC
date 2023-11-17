@@ -1,8 +1,14 @@
+CREATE DATABASE StraviaTecDB;
+GO
+
+USE StraviaTecDB;
+GO
+
 CREATE TABLE ATLETA
 (
 	Usuario varchar(20) not null,
-	Contrasena varchar(15) not null,
-	Foto varbinary(max),
+	Contrasena binary(64) not null,
+	Foto nvarchar(255),
 	Nombre varchar(15) not null,
 	Apellido_1 varchar(15) not null,
 	Apellido_2 varchar(15) not null,
@@ -270,3 +276,29 @@ REFERENCES RETOS (Nombre);
 ALTER TABLE ACT_RETO
 ADD CONSTRAINT ACT_RETO_ACT_FK FOREIGN KEY (Nmbr_Actividad, Atleta)
 REFERENCES ACTIVIDAD (Nmbr_Actividad, Atleta);
+GO
+
+--Stored Procedures
+	
+CREATE PROCEDURE Registrar
+	@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(255), @Nombre varchar(15), @Apellido_1 varchar(15),
+	@Apellido_2 varchar(15), @Fecha_nacimiento date, @Nacionalidad varchar(40), @Clasificacion varchar(40)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF EXISTS(SELECT Usuario FROM Atleta WHERE Usuario = @Usuario)
+	BEGIN
+		SELECT -1 --Atleta ya existe
+	END
+	ELSE
+	BEGIN
+		INSERT INTO ATLETA
+			(Usuario, Contrasena, Foto, Nombre, Apellido_1, Apellido_2, Fecha_nacimiento,
+			Nacionalidad, Clasificacion)
+		VALUES (
+			@Usuario, HASHBYTES('SHA2_512', @Contrasena), @Foto, @Nombre, @Apellido_1, @Apellido_2,
+			@Fecha_nacimiento, @Nacionalidad, @Clasificacion)
+		SELECT 0 --Atleta registrado
+	END
+END;
+GO
