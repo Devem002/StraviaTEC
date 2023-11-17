@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5XaRxWSne4s4r1ZSUAXeENTOtgjKEoVAYSdqllNHb4xFRt14Da3scK9Mmms+Yz62z9/skGLr91Loy93Fm8qaeQ==",
+  "dgSpecHash": "kuap8PMMEu9xX+onHWb12b1QoIA6iIoAZVYLZtG/ckVRuAN0GNh4ZrdT31+yKze1Qk1d6McVzFW4R+JV5po6tw==",
   "success": true,
   "projectFilePath": "C:\\ProyectosBD\\StraviaTEC\\StraviaSqlApi\\StraviaSqlApi\\StraviaSqlApi.csproj",
   "expectedPackageFiles": [
@@ -76,11 +76,7 @@
     "C:\\Users\\jordy\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\jordy\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
     "C:\\Users\\jordy\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\jordy\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
-    "C:\\Users\\jordy\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.14\\microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\jordy\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.14\\microsoft.windowsdesktop.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\jordy\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.14\\microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512",
-    "C:\\Users\\jordy\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.14\\microsoft.netcore.app.host.win-x64.7.0.14.nupkg.sha512"
+    "C:\\Users\\jordy\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

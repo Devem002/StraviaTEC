@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EfCoreDialogsState">
+    <option name="keyValueStorage">
+      <map>
+        <entry key="Common:b4103035-911c-4429-b80e-1315922c8ee6:dbContext" value="StraviaSqlApi.DbContexts.StraviaDbContext" />
+        <entry key="Common:buildConfiguration" value="Debug" />
+        <entry key="Common:dbContextFolder" value="Context" />
+        <entry key="Common:dbContextName" value="MyDbContext" />
+        <entry key="Common:generateOnConfiguring" value="true" />
+        <entry key="Common:noBuild" value="true" />
+        <entry key="Common:outputFolder" value="Models" />
+        <entry key="Common:provider" value="Microsoft.EntityFrameworkCore.SqlServer" />
+        <entry key="Common:schemas" value="" />
+        <entry key="Common:tables" value="" />
+        <entry key="Common:targetFramework" value="net7.0" />
+        <entry key="Common:useAttributes" value="false" />
+        <entry key="Common:useDatabaseNames" value="false" />
+        <entry key="Common:usePluralizer" value="true" />
+      </map>
+    </option>
+  </component>
+</project>
