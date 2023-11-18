@@ -1,7 +1,7 @@
-CREATE DATABASE StraviaTecDB;
+CREATE DATABASE StraviaTECDB;
 GO
 
-USE StraviaTecDB;
+USE StraviaTECDB;
 GO
 
 CREATE TABLE ATLETA
@@ -278,8 +278,28 @@ ADD CONSTRAINT ACT_RETO_ACT_FK FOREIGN KEY (Nmbr_Actividad, Atleta)
 REFERENCES ACTIVIDAD (Nmbr_Actividad, Atleta);
 GO
 
---Stored Procedures
-	
+--Views
+
+CREATE VIEW ACTIVIDAD_RECIENTE AS
+SELECT Usuario, Nombre, Apellido_1, Apellido_2, Nmbr_Actividad, Clase_actividad, Hora, Recorrido_gpx, Kms_hechos
+FROM ATLETA, ACTIVIDAD 
+WHERE Usuario = Atleta AND Hora = (SELECT MAX(Hora) FROM ACTIVIDAD WHERE Atleta = Usuario);
+GO
+
+CREATE VIEW ATLETAS_POR_CARRERA AS
+SELECT ATLETA.Nombre, CONCAT(ATLETA.Apellido_1, ' ', ATLETA.Apellido_2) AS Apellidos, (0 + Convert(Char(8),GETDATE(),112) - Convert(Char(8),ATLETA.Fecha_nacimiento,112)) / 10000 AS EDAD, INSCRITO.Carrera, ATLETA.Clasificacion
+FROM ATLETA, INSCRITO
+WHERE ATLETA.Usuario= INSCRITO.Atleta;
+GO
+
+CREATE VIEW RECORD_POR_CARRERA AS
+SELECT ATLETA.Nombre, CONCAT(ATLETA.Apellido_1, ' ', ATLETA.Apellido_2) AS Apellidos, (0 + Convert(Char(8),GETDATE(),112) - Convert(Char(8),ATLETA.Fecha_nacimiento,112)) / 10000 AS EDAD, ACT_CARRERA.Nmbr_Carrera, ATLETA.Clasificacion, ACTIVIDAD.Duracion
+FROM ATLETA, ACT_CARRERA, ACTIVIDAD
+WHERE ATLETA.Usuario= ACT_CARRERA.Atleta AND ACTIVIDAD.Nmbr_Actividad = ACT_CARRERA.Nmbr_Actividad
+GO
+
+--STORED PROCEDURES
+
 CREATE PROCEDURE Registrar
 	@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(255), @Nombre varchar(15), @Apellido_1 varchar(15),
 	@Apellido_2 varchar(15), @Fecha_nacimiento date, @Nacionalidad varchar(40), @Clasificacion varchar(40)
@@ -302,3 +322,101 @@ BEGIN
 	END
 END;
 GO
+
+CREATE PROCEDURE LoginAtleta
+	@Usuario varchar(20), @Contrasena varchar(15)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF NOT EXISTS (SELECT Usuario FROM ATLETA WHERE Usuario = @Usuario)
+	BEGIN
+		SELECT -1 --Atleta no encontrado
+	END
+	ELSE IF NOT EXISTS (SELECT Usuario FROM ATLETA WHERE Usuario = @Usuario AND Contrasena = HASHBYTES('SHA2_512', @Contrasena))
+	BEGIN
+		SELECT -2 --Contrasena Incorrecta
+	END
+	ELSE
+		BEGIN
+			SELECT 0 --Atleta accedido
+		END
+END;
+GO
+
+CREATE PROCEDURE UpdateAtleta
+		@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(255), @Nombre varchar(15), @Apellido_1 varchar(15),
+		@Apellido_2 varchar(15), @Fecha_nacimiento date, @Nacionalidad varchar(40), @Clasificacion varchar(40)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF NOT EXISTS (SELECT Usuario FROM ATLETA WHERE Usuario = @Usuario)
+	BEGIN
+		SELECT -1 --Atleta no encontrado
+	END
+	ELSE IF NOT EXISTS (SELECT Usuario FROM ATLETA WHERE Usuario = @Usuario AND Contrasena =  HASHBYTES('SHA2_512', @Contrasena))
+	BEGIN
+		SELECT -2 --Contrasena equivocada
+	END
+	ELSE 
+	BEGIN
+		UPDATE ATLETA
+		SET			Foto = @Foto,
+					Nombre = @Nombre,
+					Apellido_1 = @Apellido_1,
+					Apellido_2 = @Apellido_2,
+					Fecha_nacimiento = @Fecha_nacimiento,
+					Nacionalidad = @Nacionalidad,
+					Clasificacion = @Clasificacion
+			WHERE Usuario = @Usuario;
+		SELECT 0 --Atleta actualizado
+	END
+END;
+GO
+
+CREATE PROCEDURE ActividadRecienteAmigos
+	@Usuario varchar(15)
+AS
+BEGIN
+	SELECT * FROM ACTIVIDAD_RECIENTE
+		WHERE EXISTS(
+				SELECT Amigo FROM AMIGOS 
+				WHERE ACTIVIDAD_RECIENTE.Usuario = AMIGOS.Amigo AND AMIGOS.Usuario = @Usuario)
+END;
+GO
+
+CREATE PROCEDURE AmigosDisponibles
+	@Usuario varchar(15)
+AS
+BEGIN
+	SELECT Usuario, Nombre, Apellido_1, Fecha_nacimiento, Foto FROM ATLETA
+	WHERE ATLETA.Usuario IN(
+		SELECT AMIGOS.Amigo FROM AMIGOS
+		Where Usuario = @Usuario)
+		AND ATLETA.Usuario != @Usuario;
+END;
+GO
+
+CREATE PROCEDURE GruposDisponibles
+	@Usuario varchar(15)
+AS
+BEGIN
+	SELECT * FROM GRUPOS
+		WHERE Nombre NOT IN(
+			SELECT INTEGRANTES.Nmbr_grupo FROM INTEGRANTES
+			WHERE INTEGRANTES.Integrante = @Usuario)
+			AND Atleta_admin != @Usuario;
+END;
+GO
+
+CREATE PROCEDURE getGrupos
+	@Usuario varchar(15)
+AS
+BEGIN
+	SELECT * FROM GRUPOS
+		WHERE Nombre IN(
+			SELECT INTEGRANTES.Nmbr_grupo FROM INTEGRANTES
+			WHERE INTEGRANTES.Integrante = @Usuario)
+			OR Atleta_admin = @Usuario;
+END;
+GO	
+
