@@ -4,7 +4,7 @@ public class AtletaDto
 {
     public string Usuario { set; get; }
     
-    public string Contrasena { set; get; }
+    public Byte[] Contrasena { set; get; }
     
     public string Foto { set; get; }
     
@@ -14,7 +14,7 @@ public class AtletaDto
     
     public string Apellido_2 { set; get; }
     
-    public DateOnly Fecha_nacimiento { set; get; }
+    public DateTime Fecha_Nacimiento { set; get; }
     
     public string Nacionalidad { set; get; }
     

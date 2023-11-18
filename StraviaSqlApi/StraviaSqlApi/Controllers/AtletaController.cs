@@ -1,17 +1,13 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using StraviaSqlApi.DbContexts;
 using StraviaSqlApi.Dtos;
-using StraviaSqlApi.Entities;
 
 namespace StraviaSqlApi.Controllers;
 
 [ApiController]
 public class AtletaController : ControllerBase
 {
-    private StraviaDbContext _straviaDb;
-    private IMapper _mapper;
 
+    /*
     public AtletaController(StraviaDbContext straviaDb, IMapper mapper)
     {
         _straviaDb = straviaDb;
@@ -22,9 +18,8 @@ public class AtletaController : ControllerBase
     public IActionResult CreateAtleta([FromBody] AtletaDto payload)
     {
         var model = _mapper.Map<Atleta>(payload);
-        model.Contrasena = Utilities.Encriptador.Encrypt(model.Contrasena);
         Console.Out.WriteLine(model.Contrasena);
-        var AtletaExist = _straviaDb.ATLETA.Any(e => e.usuario == model.usuario);
+        var AtletaExist = _straviaDb.ATLETA.Any(e => e.Usuario == model.Usuario);
         if (AtletaExist == true)
         {
             return Ok(new { Message = "Ya son amigos" });
@@ -35,5 +30,11 @@ public class AtletaController : ControllerBase
         _straviaDb.SaveChanges();
 
         return Ok(model);
+    }
+    */
+    [HttpGet("atleta")]
+    public IActionResult GetAtletas()
+    {
+        return Ok(GetAtletas());
     }
 }
