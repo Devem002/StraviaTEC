@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Este archivo se usa en el proceso de publicación y empaquetado del proyecto web. Para personalizar el comportamiento de este proceso,
+edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 para obtener más información. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA6/4HbjHOKk+P4+vvjFaLbgAAAAACAAAAAAAQZgAAAAEAACAAAADZnrJzkEHIKhTB/eARel/dXhmC/pEQxJhCyUIYCa7S9QAAAAAOgAAAAAIAACAAAAD/We4Ch84JhZ7Qbzb29HlBuZIV7akNnoGkovfZzfDzNIAAAABy64ec/G1vDUaKcX3+mepMgUqIRFhFS8LQq9hy5+v/ERkxUaLKo773R9rl0BUqTecUQFXwXwq+1PtcLH9zrJWS1t56D9zQ6obVvTwctMNzgE9fSQMCR0E0eluzXfxG2NLi72A2BI43ofMJ6578uQGzfWmRV/BIvnQcOVr96sB7+UAAAAAasX/1jARZAev+WbgfGxpqqCDHD51Mbvm7w45SijWYzeEim1QwbI6bYL6Pwk8hlXQDTzjDR3AIPOljeos3jbJ/</EncryptedPassword>
+    <History>False|2023-11-19T11:05:27.9025506Z;True|2023-11-19T01:44:26.1189965-06:00;False|2023-11-19T01:43:10.1657707-06:00;True|2023-11-19T01:37:34.6081259-06:00;True|2023-11-19T01:27:58.5678751-06:00;True|2023-11-19T01:25:26.4674701-06:00;False|2023-11-19T01:24:01.8112211-06:00;True|2023-11-19T01:21:41.0350369-06:00;True|2023-11-19T01:03:21.3004016-06:00;True|2023-11-18T23:57:26.3458691-06:00;True|2023-11-18T23:53:08.9437347-06:00;True|2023-11-18T20:07:15.6632728-06:00;True|2023-11-18T20:01:51.7327387-06:00;True|2023-11-18T19:56:15.7192617-06:00;True|2023-11-18T19:31:23.4816685-06:00;True|2023-11-18T19:24:24.4536236-06:00;True|2023-11-18T19:08:45.0215155-06:00;True|2023-11-18T19:04:05.1196850-06:00;True|2023-11-18T19:02:13.3776820-06:00;True|2023-11-18T19:00:35.7250494-06:00;True|2023-11-18T18:29:21.2011529-06:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <AzureDBConnectionStrings Include="Data Source=straviatec-server.database.windows.net,1433;Initial Catalog=StraviaTECDB;User ID=sqladmin;Password=root1234!" />
+    <AzureDBConnectionStrings Include="Data Source=tcp:straviatec-server.database.windows.net,1433;Initial Catalog=StraviaTECDB;User Id=sqladmin@straviatec-server;Password=root1234!" />
+  </ItemGroup>
+</Project>

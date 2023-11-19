@@ -4,9 +4,9 @@ public class AtletaDto
 {
     public string Usuario { set; get; }
     
-    public Byte[] Contrasena { set; get; }
+    public string Contrasena { set; get; }
     
-    public string Foto { set; get; }
+    public string? Foto { set; get; }
     
     public string Nombre { set; get; }
     

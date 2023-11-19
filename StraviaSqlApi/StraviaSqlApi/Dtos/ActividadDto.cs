@@ -8,9 +8,9 @@ public class ActividadDto
     
     public TimeOnly Hora { set; get; }
     
-    public int Kms { set; get; }
+    public decimal Kms { set; get; }
     
-    public TimeOnly Duracion { set; get; }
+    public DateTime Duracion { set; get; }
     
     public string Recorrido_gpx { set; get; }
     
