@@ -8,7 +8,7 @@ CREATE TABLE ATLETA
 (
 	Usuario varchar(20) not null,
 	Contrasena binary(64) not null,
-	Foto nvarchar(255),
+	Foto nvarchar(500),
 	Nombre varchar(15) not null,
 	Apellido_1 varchar(15) not null,
 	Apellido_2 varchar(15) not null,
@@ -302,7 +302,7 @@ GO
 --STORED PROCEDURES
 
 CREATE PROCEDURE Registrar
-	@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(255), @Nombre varchar(15), @Apellido_1 varchar(15),
+	@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(500), @Nombre varchar(15), @Apellido_1 varchar(15),
 	@Apellido_2 varchar(15), @Fecha_nacimiento date, @Nacionalidad varchar(40), @Clasificacion varchar(40)
 AS
 BEGIN
@@ -345,7 +345,7 @@ END;
 GO
 
 CREATE PROCEDURE UpdateAtleta
-		@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(255), @Nombre varchar(15), @Apellido_1 varchar(15),
+		@Usuario varchar(20), @Contrasena varchar(15), @Foto nvarchar(500), @Nombre varchar(15), @Apellido_1 varchar(15),
 		@Apellido_2 varchar(15), @Fecha_nacimiento date, @Nacionalidad varchar(40), @Clasificacion varchar(40)
 AS
 BEGIN
@@ -551,5 +551,97 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE Registrar_en_Carrera
-	@Usuario varchar(20), 
+--CREATE PROCEDURE Registrar_en_Carrera
+	--@Usuario varchar(20),
+	
+--TRIGGERS
+
+CREATE TRIGGER AtletaEliminadoTrigger
+	ON ATLETA
+	INSTEAD OF DELETE
+AS
+BEGIN
+	DELETE FROM INSCRITO
+	WHERE Atleta IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM ACT_CARRERA
+	WHERE Atleta IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM ACT_RETO
+	WHERE Atleta IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM ACTIVIDAD
+	WHERE Atleta IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM INTEGRANTES
+	WHERE Integrante IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM AMIGOS
+	WHERE Usuario IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM GRUPOS
+	WHERE Atleta_admin IN(SELECT deleted.Usuario FROM deleted)
+	DELETE FROM ATLETA
+	Where Usuario = (SELECT deleted.Usuario FROM deleted)
+END;
+GO
+
+CREATE TRIGGER ActividadEliminadoTrigger
+	ON ACTIVIDAD
+	INSTEAD OF DELETE
+AS
+BEGIN
+	DELETE FROM ACT_RETO
+	WHERE Nmbr_Actividad IN(SELECT deleted.Nmbr_Actividad FROM deleted)
+	DELETE FROM ACT_CARRERA
+	WHERE Nmbr_Actividad IN(SELECT deleted.Nmbr_Actividad FROM deleted)
+	DELETE FROM ACTIVIDAD
+	WHERE Nmbr_Actividad IN(SELECT deleted.Nmbr_Actividad FROM deleted)
+END;
+GO
+
+CREATE TRIGGER GruposEliminadoTrigger
+	ON GRUPOS
+	INSTEAD OF DELETE
+AS 
+BEGIN
+	DELETE FROM INTEGRANTES
+	WHERE Nmbr_grupo IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM PRIV_RETO
+	WHERE Nmbr_Grupo IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM PRIV_CARRERA
+	WHERE Nmbr_Grupo IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM GRUPOS
+	WHERE Nombre IN(SELECT deleted.Nombre FROM deleted)
+END;
+GO
+
+CREATE TRIGGER CarreraEliminadoTrigger
+	ON CARRERA
+	INSTEAD OF DELETE
+AS
+BEGIN
+	DELETE FROM INSCRITO
+	WHERE Carrera IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM PRIV_CARRERA
+	WHERE Nmbr_Carrera IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM ACT_CARRERA
+	WHERE Nmbr_Carrera IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM CUENTA_BANCO
+	WHERE Carrera_dueno IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM PATROCINA_CARRERA
+	WHERE Nmbr_carrera IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM CARRERA
+	WHERE Nombre IN(SELECT deleted.Nombre FROM deleted)
+END;
+GO
+
+CREATE TRIGGER RetoEliminadoTrigger
+	ON RETOS
+	INSTEAD OF DELETE
+AS
+BEGIN
+	DELETE FROM PRIV_RETO
+	WHERE Nmbr_Reto IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM ACT_RETO
+	WHERE Nmbr_Reto IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM PATROCINA_RETO
+	WHERE Nmbr_reto IN(SELECT deleted.Nombre FROM deleted)
+	DELETE FROM RETOS
+	WHERE Nombre IN(SELECT deleted.Nombre FROM deleted)
+END;
+GO
