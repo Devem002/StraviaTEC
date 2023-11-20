@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Chronometer
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
@@ -25,7 +26,8 @@ import com.vmadalin.easypermissions.EasyPermissions
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import java.time.Instant
 import java.time.format.DateTimeFormatter
-
+import kotlinx.serialization.*
+import com.example.straviaapp.SqliteHelper
 /**
  * Actividad para rastrear usuario y tomar informacion de actividad
  */
@@ -40,9 +42,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private var distance = 0F
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var polylineOptions = PolylineOptions()
+    private lateinit var sqliteHelper: SqliteHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sqliteHelper = SqliteHelper(this)
         setContentView(R.layout.activity_main)
         distanceText = findViewById(R.id.tvKm)
         chronometer = findViewById(R.id.chronometerWidg)
@@ -170,14 +174,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     @RequiresApi(Build.VERSION_CODES.O)
     fun stopActivity(view: View) {
         chronometer.stop()
-        generateGPX("route", locationList)
+        sqliteHelper.insertGPX(generateGPX("route", locationList))
     }
 
     /**
      * Genera archivo .gpx a partir de una lista de puntos de mapa
      */
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun generateGPX(name: String, points: List<Location>): String {
+     fun generateGPX(name: String, points: List<Location>): String {
         val header = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?><gpx xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"StraviaApp 0.1.0\" version=\"1.1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"  xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\"><trk>\n"
         val name = "<name>$name</name><trkseg>\n"
         var segments = ""
@@ -193,6 +198,4 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         val footer = "</trkseg></trk></gpx>"
         return header + name + segments + footer
     }
-
-
 }
