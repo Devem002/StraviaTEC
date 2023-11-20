@@ -216,7 +216,7 @@ namespace StraviaSqlApi.DAL
 
         private static string GetConnection()
         {
-            return "Server=tcp:straviatec-server.database.windows.net,1433;Initial Catalog=StraviaTecDB-Azure;Persist Security Info=False;User ID=sqladmin;Password=root1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            return "Server=tcp:straviatec-server.database.windows.net,1433;Initial Catalog=StraviaTECDB;Persist Security Info=False;User ID=sqladmin;Password=root1234!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         }
     }
 }

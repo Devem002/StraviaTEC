@@ -55,3 +55,4 @@ C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\bin\Release\net7.0\System.
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\bin\Release\net7.0\System.Web.WebPages.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\bin\Release\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\bin\Release\net7.0\Microsoft.Web.Infrastructure.dll
+C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\bin\Release\net7.0\PlantUml.Net.dll

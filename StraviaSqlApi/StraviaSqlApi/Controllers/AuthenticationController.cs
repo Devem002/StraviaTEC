@@ -62,10 +62,7 @@ namespace StraviaSqlApi.Controllers
                     fileStream.Position = 0;
                     Picture.CopyTo(fileStream);
                 }
-                return Ok(new RegistrationResponse()
-                {
-                    Token = GenerateJwtToken(User)
-                });
+                return Ok("Registrado");
             }
             catch (Exception err)
             {
@@ -87,10 +84,7 @@ namespace StraviaSqlApi.Controllers
                     return new JsonResult("User not found.") { StatusCode = 403 };
                 else if (result is "WrongPass")
                     return new JsonResult("Incorrect password.") { StatusCode = 403 };
-                return Ok(new RegistrationResponse()
-                {
-                    Token = GenerateJwtToken(user.User)
-                });
+                return Ok("Logged In");
             }
             return new JsonResult("Invalid model for Login.") { StatusCode = 400 };
         }

@@ -24,6 +24,7 @@ C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\Microsoft.Web.Infrastructure.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\Newtonsoft.Json.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\Newtonsoft.Json.Bson.dll
+C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\PlantUml.Net.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\ProyectosBD\StraviaTEC\StraviaSqlApi\StraviaSqlApi\obj\Release\net7.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
