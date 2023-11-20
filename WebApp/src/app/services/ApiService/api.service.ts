@@ -86,7 +86,7 @@ export class ApiService {
   }
 
   loginUser(user: JSON) {
-    let header = new HttpHeaders().set('Type-contet', 'aplication/json');
+    let header = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post('https://straviatec-api.azurewebsites.net/login', user, { headers: header, observe: 'response' });
   }
 

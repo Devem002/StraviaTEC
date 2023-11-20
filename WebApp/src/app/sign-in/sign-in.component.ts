@@ -40,6 +40,7 @@ export class SignInComponent implements OnInit {
         this.riseAlert('Connection failed.', 'danger');
       }
       else {
+        console.log(error)
         this.riseAlert(error.error, 'danger');
       }
     })
@@ -61,10 +62,19 @@ export class SignInComponent implements OnInit {
     if (this.form.get('User')!.value === 'admin' && this.form.get('Password')!.value === 'admin') {
       this.router.navigate(['/admin']); //Redirecciona a la pagina de administrador
     } else {
-      this.data = <JSON>response.body;
-      this.sharedService.setToken(this.data.token);
-      this.sharedService.getUserData().User = this.form.get('User')!.value;
-      this.router.navigate(['/home']);
+      if (response && response.body) {
+        this.data = response.body;
+        console.log(this.data)
+        if (this.data == 'Loged In') {
+            this.sharedService.setToken(this.data.token);
+            this.sharedService.getUserData().User = this.form.get('user')!.value;
+            this.router.navigate(['/home']);
+        } else {
+            console.log('Incorrect password');
+        }
+    } else {
+        console.log('Response or response body is undefined');
+    }
     }
   }
 
