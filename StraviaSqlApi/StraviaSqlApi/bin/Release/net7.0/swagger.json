@@ -1,0 +1,1165 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "StraviaSqlApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "version": "1.0"
+  },
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "User",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "FirstName",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "LastName1",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "LastName2",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "BirthDate",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "formData",
+            "name": "Password",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ContentType",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ContentDisposition",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Headers",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Length",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "formData",
+            "name": "Name",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "FileName",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Nationality",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/UserLoginDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/challenges": {
+      "get": {
+        "tags": [
+          "Challenge"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Challenge"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ChallengeRegisterDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/getInChallenge/{user}/{challengeId}": {
+      "post": {
+        "tags": [
+          "Challenge"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "retoId",
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "query",
+            "name": "actividadId",
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "path",
+            "name": "challengeId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/ChallengeVisibility": {
+      "get": {
+        "tags": [
+          "Challenge"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/challengesByUser/{user}": {
+      "get": {
+        "tags": [
+          "Challenge"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/AddChallengeActivity/{challengeId}/{activityId}": {
+      "post": {
+        "tags": [
+          "Challenge"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "user",
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "path",
+            "name": "challengeId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "activityId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/races": {
+      "get": {
+        "tags": [
+          "Race"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/racesByUser/{user}": {
+      "get": {
+        "tags": [
+          "Race"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/reraces": {
+      "post": {
+        "tags": [
+          "Race"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/RaceRegisterDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/RaceVisibility": {
+      "get": {
+        "tags": [
+          "Race"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/RaceRegister/{User}/{id}/{optionselect}": {
+      "get": {
+        "tags": [
+          "Race"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "User",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "optionselect",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/friendsFrontPage/{user}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/userImage": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/FilePathDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/activityRoute": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/FilePathDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/friendsAvailable/{user}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/friends/{user}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/friends/Delete/{user}/{friend}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "friend",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/addActivity2": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ActivityDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/addActivity": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "UserId",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Distance",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Duration",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "formData",
+            "name": "ContentType",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ContentDisposition",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Headers",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Length",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "formData",
+            "name": "Name",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "FileName",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Start",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "formData",
+            "name": "Type",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Roc",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "RocName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/userActivities/{user}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/addFriend/{user}/{friend}": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "friend",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/groupsAvailable/{user}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/groups/{user}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/createGroup/{admin}/{name}": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "admin",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/joinGroup/{id}/{user}": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/quitGroup/{id}/{user}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/updateGroup/newNombre": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "newNombre",
+            "type": "string",
+            "collectionFormat": "multi"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/GroupDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/edit": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "User",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "FirstName",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "LastName1",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "LastName2",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "BirthDate",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "formData",
+            "name": "NewPassword",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "CurrentPassword",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ContentType",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ContentDisposition",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Headers",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Length",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "formData",
+            "name": "Name",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "FileName",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "CurrentPicture",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "Nationality",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/delete/{user}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ActivityDto": {
+      "required": [
+        "altitude",
+        "distance",
+        "duration",
+        "route",
+        "start",
+        "type",
+        "userId"
+      ],
+      "type": "object",
+      "properties": {
+        "userId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "distance": {
+          "format": "double",
+          "type": "number"
+        },
+        "duration": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "route": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "altitude": {
+          "format": "double",
+          "type": "number"
+        },
+        "start": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "type": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "roC": {
+          "type": "string"
+        },
+        "roCName": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ChallengeRegisterDto": {
+      "required": [
+        "clase_actividad",
+        "fecha_inicio",
+        "finalizado",
+        "fondo_altura",
+        "grupo",
+        "kms_total",
+        "nombre"
+      ],
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "kms_total": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "finalizado": {
+          "type": "boolean"
+        },
+        "fecha_inicio": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "fecha_fin": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "fondo_altura": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "clase_actividad": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "grupo": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "privado": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "FilePathDto": {
+      "required": [
+        "path"
+      ],
+      "type": "object",
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GroupDTO": {
+      "required": [
+        "adminUser",
+        "id",
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "adminUser": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RaceRegisterDto": {
+      "required": [
+        "clase_actividad",
+        "fecha",
+        "finalizado",
+        "hora",
+        "kms_total",
+        "nombre",
+        "precio",
+        "privado"
+      ],
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "fecha": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "hora": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "precio": {
+          "format": "double",
+          "type": "number"
+        },
+        "kms_total": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "recorrido_gpx": {
+          "type": "string"
+        },
+        "finalizado": {
+          "type": "boolean"
+        },
+        "clase_actividad": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "privado": {
+          "type": "boolean"
+        },
+        "grupo": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "UserLoginDto": {
+      "required": [
+        "password",
+        "user"
+      ],
+      "type": "object",
+      "properties": {
+        "user": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "password": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
