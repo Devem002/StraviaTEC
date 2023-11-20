@@ -27,8 +27,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      User: ['', [Validators.required, Validators.maxLength(15)]],
-      Password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
+      user: ['', [Validators.required, Validators.maxLength(15)]],
+      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
     });
   }
   //Funcion para capturar y enviar los datos introducidos en el formulario

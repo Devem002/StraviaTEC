@@ -5,11 +5,11 @@
 
     <form [formGroup]="form" (submit)="getData()" style="max-width: 300px;margin: auto;">
         <div class="form-floating">
-            <input type="text" id="user" class="form-control" placeholder="Usuario" formControlName="User">
+            <input type="text" id="user" class="form-control" placeholder="Usuario" formControlName="user">
             <label for="formFloatingInput">Usuario</label>
         </div>
         <div class="form-floating mt-1">
-            <input type="password" id="Password" placeholder="Contraseña" class="form-control" formControlName="Password">
+            <input type="password" id="Password" placeholder="Contraseña" class="form-control" formControlName="password">
             <label for="formFloatingInput">Contraseña</label>
         </div>
         <div style="margin-top:20px" *ngIf="alert" class="alert alert-{{typeAlert}} alert-dismissible" role="alert">
