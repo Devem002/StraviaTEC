@@ -30,7 +30,6 @@ C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\Strav
 C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\StraviaMongoAPI.csproj.CoreCompileInputs.cache
 C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\StraviaMongoAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\StraviaMongoAPI.MvcApplicationPartsAssemblyInfo.cache
-C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\StraviaMongoAPI.sourcelink.json
 C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\staticwebassets.build.json
 C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\staticwebassets.development.json
 C:\ProyectosBD\StraviaTEC\StraviaMongoAPI\StraviaMongoAPI\obj\Debug\net7.0\staticwebassets\msbuild.StraviaMongoAPI.Microsoft.AspNetCore.StaticWebAssets.props
