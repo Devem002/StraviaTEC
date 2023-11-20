@@ -33,6 +33,11 @@ export class SignInComponent implements OnInit {
   }
   //Funcion para capturar y enviar los datos introducidos en el formulario
   getData() {
+    if (this.form.get('user')!.value == 'admin' && this.form.get('password')!.value == 'admin') {
+
+      this.router.navigate(['/admin']); //Redirecciona a la pagina de administrador
+    }
+    else{
     this.service.loginUser(this.form.value).subscribe(resp => {
       this.readResp(resp);
     }, error => {
@@ -40,11 +45,9 @@ export class SignInComponent implements OnInit {
         this.riseAlert('Connection failed.', 'danger');
       }
       else {
-        console.log(error)
         this.riseAlert(error.error, 'danger');
       }
-    })
-
+    })}
   }
 
   riseAlert(message: string, type: string) {
@@ -59,13 +62,10 @@ export class SignInComponent implements OnInit {
 
   //Funcion para leer la respuesta del API
   readResp(response: any) {
-    if (this.form.get('User')!.value === 'admin' && this.form.get('Password')!.value === 'admin') {
-      this.router.navigate(['/admin']); //Redirecciona a la pagina de administrador
-    } else {
       if (response && response.body) {
         this.data = response.body;
         console.log(this.data)
-        if (this.data == 'Loged In') {
+        if (this.data == 'Logged In') {
             this.sharedService.setToken(this.data.token);
             this.sharedService.getUserData().User = this.form.get('user')!.value;
             this.router.navigate(['/home']);
@@ -77,5 +77,3 @@ export class SignInComponent implements OnInit {
     }
     }
   }
-
-}

@@ -81,7 +81,7 @@ export class ApiService {
   }
 
   registerUser(user: FormData) {
-    let header = new HttpHeaders().set('Type-contet', 'multipart/form-data');
+    let header = new HttpHeaders().set('Content-Type', 'multipart/form-data');
     return this.http.post('https://straviatec-api.azurewebsites.net/register', user, { headers: header, observe: 'response' });
   }
 
