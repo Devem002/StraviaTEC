@@ -55,7 +55,7 @@ CREATE TABLE INSCRITO
 (
 	Carrera varchar(50) not null,
 	Atleta varchar(20) not null,
-	Pago money,
+	Pago bit,
 	Primary key (Carrera, Atleta)
 );
 
@@ -288,13 +288,13 @@ WHERE Usuario = Atleta AND Hora = (SELECT MAX(Hora) FROM ACTIVIDAD WHERE Atleta 
 GO
 
 CREATE VIEW ATLETAS_POR_CARRERA AS
-SELECT ATLETA.Nombre, CONCAT(ATLETA.Apellido_1, ' ', ATLETA.Apellido_2) AS Apellidos, (0 + Convert(Char(8),GETDATE(),112) - Convert(Char(8),ATLETA.Fecha_nacimiento,112)) / 10000 AS EDAD, INSCRITO.Carrera, ATLETA.Clasificacion
+SELECT ATLETA.Nombre AS Nombre_Atleta, CONCAT(ATLETA.Apellido_1, ' ', ATLETA.Apellido_2) AS Apellidos, (0 + Convert(Char(8),GETDATE(),112) - Convert(Char(8),ATLETA.Fecha_nacimiento,112)) / 10000 AS EDAD, INSCRITO.Carrera, ATLETA.Clasificacion
 FROM ATLETA, INSCRITO
 WHERE ATLETA.Usuario= INSCRITO.Atleta;
 GO
 
 CREATE VIEW RECORD_POR_CARRERA AS
-SELECT ATLETA.Nombre, CONCAT(ATLETA.Apellido_1, ' ', ATLETA.Apellido_2) AS Apellidos, (0 + Convert(Char(8),GETDATE(),112) - Convert(Char(8),ATLETA.Fecha_nacimiento,112)) / 10000 AS EDAD, ACT_CARRERA.Nmbr_Carrera, ATLETA.Clasificacion, ACTIVIDAD.Duracion
+SELECT ATLETA.Nombre AS Nombre_Atleta, CONCAT(ATLETA.Apellido_1, ' ', ATLETA.Apellido_2) AS Apellidos, (0 + Convert(Char(8),GETDATE(),112) - Convert(Char(8),ATLETA.Fecha_nacimiento,112)) / 10000 AS EDAD, ACT_CARRERA.Nmbr_Carrera, ATLETA.Clasificacion, ACTIVIDAD.Duracion
 FROM ATLETA, ACT_CARRERA, ACTIVIDAD
 WHERE ATLETA.Usuario= ACT_CARRERA.Atleta AND ACTIVIDAD.Nmbr_Actividad = ACT_CARRERA.Nmbr_Actividad
 GO
@@ -361,7 +361,8 @@ BEGIN
 	ELSE 
 	BEGIN
 		UPDATE ATLETA
-		SET			Foto = @Foto,
+		SET			Contrasena = HASHBYTES('SHA2_512', @Contrasena),
+					Foto = @Foto,
 					Nombre = @Nombre,
 					Apellido_1 = @Apellido_1,
 					Apellido_2 = @Apellido_2,
@@ -551,8 +552,84 @@ BEGIN
 END;
 GO
 
---CREATE PROCEDURE Registrar_en_Carrera
-	--@Usuario varchar(20),
+CREATE PROCEDURE Registrar_en_Carrera
+	@Usuario varchar(20), @Nombre varchar(50), @Pago bit
+AS 
+BEGIN
+	SET NOCOUNT ON; 
+	IF EXISTS( SELECT ATLETA.Nombre FROM ATLETA, INSCRITO WHERE INSCRITO.Atleta =@Usuario)
+		BEGIN
+			SELECT -1 --Ya esta registrado
+		END
+	ELSE 
+	BEGIN
+		INSERT INTO INSCRITO
+			(Carrera, Atleta, Pago)
+		VALUES (@Nombre, @Usuario, 0)
+		SELECT 0 --Registrado en carrera
+	END
+END;
+GO
+
+CREATE PROCEDURE CARRERA_A_PAGAR
+	@Usuario varchar(20)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF NOT EXISTS(SELECT Carrera FROM INSCRITO WHERE Atleta = @Usuario AND Pago = 0)
+	BEGIN 
+		SELECT -1 --Carrera pagada
+	END
+	ELSE
+		BEGIN
+			SELECT CARRERA.Nombre,  CARRERA.Precio FROM INSCRITO, CARRERA WHERE INSCRITO.Atleta = @Usuario AND INSCRITO.Pago = 0 AND CARRERA.Nombre = INSCRITO.Carrera;
+		END
+END;
+GO
+
+CREATE PROCEDURE PAGAR_CARRERA
+	@Nombre_Carrera varchar(50), @Usuario varchar(20), @Pago bit
+AS 
+BEGIN
+	SET NOCOUNT ON;
+	BEGIN 
+		UPDATE INSCRITO
+		SET @Pago=1 WHERE Carrera=@Nombre_Carrera AND Atleta = @Usuario;
+	END
+END;
+GO
+
+CREATE PROCEDURE ATLETAS_EN_CARRERA
+	@Nombre_carrera varchar(50)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF NOT EXISTS(SELECT Nombre FROM CARRERA WHERE Nombre =@Nombre_carrera)
+		BEGIN
+			SELECT -1 --Carrera no encontrada
+		END
+	ELSE
+		BEGIN
+			SELECT Nombre_Atleta, Apellidos, EDAD, Clasificacion FROM ATLETAS_POR_CARRERA, CARRERA WHERE CARRERA.Nombre = @Nombre_carrera AND CARRERA.Nombre = ATLETAS_POR_CARRERA.Carrera ORDER BY Clasificacion;
+		END
+END;
+GO
+
+CREATE PROCEDURE RECORD_EN_CARRERA
+	@Nombre_carrera varchar(50)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	IF NOT EXISTS(SELECT Nombre FROM CARRERA WHERE Nombre =@Nombre_carrera)
+		BEGIN
+			SELECT -1 --Carrera no encontrada
+		END
+	ELSE
+		BEGIN
+			SELECT Nombre_Atleta, Apellidos, EDAD, Clasificacion, Duracion FROM RECORD_POR_CARRERA, CARRERA WHERE CARRERA.Nombre = @Nombre_carrera AND CARRERA.Nombre = RECORD_POR_CARRERA.Nmbr_Carrera ORDER BY Clasificacion, Duracion;
+		END
+END;
+GO
 	
 --TRIGGERS
 
